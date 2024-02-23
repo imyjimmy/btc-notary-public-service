@@ -123,6 +123,7 @@ function App() {
 				</div>
 			</div>
 			<div className="myId">
+				<div>My Id: {me}</div>
 				<TextField
 					id="filled-basic"
 					label="Name"
