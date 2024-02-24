@@ -29,4 +29,5 @@ io.on("connection", (socket) => {
   });
 })
 
+app.use(express.static('./register'))
 server.listen(5001, () => console.log("server is running on port 5001"))

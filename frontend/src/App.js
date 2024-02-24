@@ -11,6 +11,33 @@ import "./App.css"
 
 
 const socket = io.connect('http://localhost:5001')
+
+const connectWallet = async () => {
+  if (window.ethereum) { //check if Metamask is installed
+        try {
+            const address = await window.ethereum.enable(); //connect Metamask
+            const obj = {
+                    connectedStatus: true,
+                    status: "",
+                    address: address
+                }
+                return obj;
+             
+        } catch (error) {
+            return {
+                connectedStatus: false,
+                status: "🦊 Connect to Metamask using the button on the top right."
+            }
+        }
+        
+  } else {
+        return {
+            connectedStatus: false,
+            status: "🦊 You must install Metamask into your browser: https://metamask.io/download.html"
+        }
+      } 
+};
+
 function App() {
 	const [ me, setMe ] = useState("")
 	const [ stream, setStream ] = useState()
@@ -23,6 +50,7 @@ function App() {
 	const [ name, setName ] = useState("")
 	const [ chatMessage, setChatMessage] = useState('');
 	const [ messageHistory, setMessageHistory] = useState([]);
+	const [ wallet, setWallet ] = useState();
 	const myVideo = useRef()
 	const userVideo = useRef()
 	const connectionRef= useRef()
@@ -49,6 +77,12 @@ function App() {
 			console.log(msg);
 		})
 	}, [])
+
+	useEffect(async () => {
+		const wallet = await connectWallet()
+		console.log('wallet:', wallet)
+		setWallet(wallet)
+	},[])
 
 	const callUser = (id) => {
 		const peer = new Peer({
@@ -124,6 +158,7 @@ function App() {
 			</div>
 			<div className="myId">
 				<div>My Id: {me}</div>
+				<div>My Wallet: { wallet ? wallet.address : '' }</div>
 				<TextField
 					id="filled-basic"
 					label="Name"
