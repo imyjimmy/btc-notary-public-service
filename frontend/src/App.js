@@ -7,6 +7,9 @@ import React, { useEffect, useRef, useState } from "react"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import Peer from "simple-peer"
 import io from "socket.io-client"
+// web3 stuff now
+import Web3 from 'web3'
+
 import "./App.css"
 
 
@@ -26,6 +29,19 @@ function App() {
 	const myVideo = useRef()
 	const userVideo = useRef()
 	const connectionRef= useRef()
+
+	// web3 stuff
+	const [web3Account, setWeb3Account] = useState("");
+
+  async function loadBlockChain() {
+    const web3 = new Web3(Web3.givenProvider || "http://localhost:8080");
+    const network = await web3.eth.net.getNetworkType();
+    console.log(network); // should give you main if you're connected to the main network via metamask...
+    const accounts = await web3.eth.getAccounts();
+    setAccount(accounts[0]);
+  }
+
+  // useEffect(() => loadBlockChain, []);
 
 	useEffect(() => {
 		navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
@@ -48,6 +64,8 @@ function App() {
 			setMessageHistory(messageHistory => [...messageHistory, msg])
 			console.log(msg);
 		})
+
+		loadBlockChain();
 	}, [])
 
 	const callUser = (id) => {
@@ -124,6 +142,7 @@ function App() {
 			</div>
 			<div className="myId">
 				<div>My Id: {me}</div>
+				<p>Your account: {web3Account}</p>
 				<TextField
 					id="filled-basic"
 					label="Name"
