@@ -142,6 +142,11 @@ function App() {
 		setChatMessage('');
 	}
 
+	const executeSmartContract = (e) => {
+		e.preventDefault();
+		console.log('execute smart contract');
+	}
+
 	return (
 		<>
 			<h1 style={{ textAlign: "center", color: '#fff' }}>BTC Remote Notary Public Service</h1>
@@ -207,8 +212,11 @@ function App() {
 					onChange={(e) => setChatMessage(e.target.value)}
 					style={{ marginBottom: "12px" }}
 				/>
-				<Button variant="contained" color="primary" onClick={submitMessage}>
+				<Button id="sendButton" variant="contained" color="primary" onClick={submitMessage}>
 					Send
+				</Button>
+				<Button id="executeContractButton" variant="contained" color="primary" onClick={executeSmartContract}>
+					Do the Damn Thing
 				</Button>
 			</div>
 			<div>

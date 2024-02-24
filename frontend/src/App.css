@@ -22,6 +22,7 @@
 
 .myChat {
 	margin-right: 2rem;
+	margin-left: 2rem;
 	border-radius: 5px;
 	background: #c9d6ff; /* fallback for old browsers */
 	background: -webkit-linear-gradient(to right, #e2e2e2, #c9d6ff); /* Chrome 10-25, Safari 5.1-6 */
@@ -33,8 +34,15 @@
 
 	padding: 2rem;
 	display: grid;
-	justify-content: center;
 	align-content: center;
+}
+
+#sendButton {
+	margin-bottom: 2rem;
+}
+
+#executeContractButton {
+	background-color:rgb(32, 184, 91);
 }
 
 .call-button {
